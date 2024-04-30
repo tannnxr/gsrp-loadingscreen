@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>loadingscreen</title>
+    <link rel="stylesheet" type="text/css" href="../styles/globals.css" />
+  </head>
+  <body>
+    <img
+      src="./imgs/gsp_gsrp_suv_charger.png"
+      alt=""
+      srcset=""
+      class="mockbackground"
+      id="#slideshow"
+    />
+    <div class="info">
+      <img src="./imgs/logo.svg" alt="" />
+      <h1 class="server-name">Georgia State Roleplay</h1>
+      <h3 class="usn">United States of Nixx</h3>
+    </div>
+
+    <script type="text/javascript">
+      window.addEventListener("DOMContentLoaded", () => {
+        const ALLOWED_IMAGES = [
+          "airone_flying_in_city.jpg",
+          "foggy_truck.png",
+          "gsp_gsrp_suv_charger.png",
+          "gsp_gsrp_suv_charger.png",
+          "ss_bikes.png",
+          "ss.png",
+          "apd_at_robbery.png",
+        ];
+
+        function createTransitionElement(src) {
+          const newImageElement = document.createElement("img");
+          newImageElement.classList.add("mockbackground");
+        }
+
+        let previousImage = ""; // Variable to store the previously selected image
+
+        function getRandomImage() {
+          let randomImage;
+          do {
+            randomImage = ALLOWED_IMAGES[Math.floor(Math.random() * ALLOWED_IMAGES.length)];
+          } while (randomImage === previousImage); // Keep generating a random image until it's different from the previous one
+          previousImage = randomImage; // Update the previous image
+          return randomImage;
+        }
+
+        function changeImageSlideshow() {
+          const currentImage = document.querySelector(".mockbackground");
+          const newImage = document.createElement("img");
+          newImage.src = "./imgs/" + getRandomImage();
+          newImage.classList.add("mockbackground", "hidden");
+          currentImage.parentNode.insertBefore(newImage, currentImage.nextSibling);
+          setTimeout(() => {
+            currentImage.classList.add("hidden");
+            newImage.classList.remove("hidden");
+            setTimeout(() => {
+              currentImage.remove();
+            }, 1000); // Delay to match CSS transition time
+          }, 100); // Delay to ensure new image is rendered
+        }
+        setInterval(changeImageSlideshow, 2500); // Change image every 5 seconds
+      });
+    </script>
+  </body>
+</html>
